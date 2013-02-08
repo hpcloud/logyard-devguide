@@ -5,17 +5,19 @@ require 'socket'
 
 module Drain
   def self.run(&block)
-    q = EM::Queue.new
-    EM.start_server '127.0.0.1', 9123, Handler, q
-    puts "To let logyard connect to this drain, run (for example): "
-    puts "    kato log drain add mytestdrain tcp://127.0.0.1:9123"
+    EM.run {
+      q = EM::Queue.new
+      EM.start_server '127.0.0.1', 9123, Handler, q
+      puts "To let logyard connect to this drain, run (for example): "
+      puts "    kato log drain add mytestdrain tcp://127.0.0.1:9123"
 
-    # Read from the queue
-    cb = Proc.new do |event|
-      block.call(event)
+      # Read from the queue
+      cb = Proc.new do |event|
+        block.call(event)
+        q.pop &cb
+      end
       q.pop &cb
-    end
-    q.pop &cb
+    }
   end
 
   private
