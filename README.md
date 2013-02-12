@@ -74,3 +74,14 @@ You will notice that all events JSON record have the following keys:
 be self-explanatory. A custom drain may choose to filter events based
 on one or more of these fields and then send them in turn to a
 different service.
+
+## Example: tracking application push requests
+
+The list of types of cloud events can be found in the
+[Stackato documentation](http://docs.stackato.com/server/logging.html#keys).
+You may have your drain filter a particular set of cloud events by
+using these predefined types. For example, the type `stager_start`
+denotes the event of staging an application which, generally,
+correlates with "s push" and "s update". Using this information, you
+may track application push requests; see `app_pushes.rb` for a
+simplistic implementation.
