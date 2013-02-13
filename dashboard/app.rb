@@ -1,11 +1,5 @@
 require "fnordmetric"
-
-# TODO: cleanup
-if redis_url = ENV["REDIS_URL"]
-  puts "Using redis #{redis_url}"
-  FnordMetric::DEFAULT_OPTIONS[:redis_url] = redis_url
-  FnordMetric.options[:redis_url] = redis_url
-end
+require "./stackato.rb"
 
 FnordMetric.namespace :stackato do
 
@@ -19,9 +13,4 @@ FnordMetric.namespace :stackato do
 
 end
 
-
-FnordMetric::Web.new(:host => "0.0.0.0",
-                     :port => ENV["PORT"] || 5000)
-FnordMetric.run
-
-# FnordMetric.standalone
+Stackato.run

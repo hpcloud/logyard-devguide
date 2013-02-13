@@ -1,4 +1,4 @@
-# Logyard Cookbook
+# Logyard Developer Guide
 
 First clone this repo inside the Stackato VM and follow along the
 instructions.
