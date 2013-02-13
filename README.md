@@ -26,8 +26,8 @@ verify this by pushing an application by side.
 ## Our drain library
 
 echo.rb contains a bit of eventmachine machinery and, as we'll be
-basing other drains using similar mechanism, let's abstract this out
-as a ruby module `drain.rb`. The echo drain can now be further simplified:
+basing other drains on the same, let's abstract this out as a ruby
+module `drain.rb`. The echo drain can now be further simplified:
 
 ```ruby
 # echo2.rb -- much simpler than echo.rb
