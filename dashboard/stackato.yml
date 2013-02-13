@@ -1,0 +1,10 @@
+name: stackato-events
+
+framework:
+  type: sinatra
+  
+processes:
+  web: ruby app.rb
+  
+services:
+  db: redis
