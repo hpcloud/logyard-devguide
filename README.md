@@ -42,7 +42,7 @@ remember that the above 3 lines of code -- or 1 line, depending on how
 you view it -- is all you need in order to write logyard drains in
 ruby.
 
-## Processing cloud events
+## Processing Cloud Events
 
 Stackato's cloud events is a stream of key events from across the
 Stackato cluster. Each event is represented in JSON format. The script
@@ -85,3 +85,49 @@ denotes the event of staging an application which, generally,
 correlates with "s push" and "s update". Using this information, you
 may track application push requests; see `app_pushes.rb` for a
 simplistic implementation.
+
+## Processing events not already in Cloud Events
+
+If Cloud Events does not contain the event you are looking for, you
+may add a drain to receive the default stream (all system logs) and
+then manually look for it. See below for an example.
+
+In future, Cloud Events may be made extensible so that custom events
+can be added.
+
+## Example: tracking user logins
+
+User logins are not part of Cloud Events. So we will write a drain
+that parses the Stackato logs to look for it. User login is logged in
+`/s/logs/cloud_controller.log` with a line like:
+
+```
+[2013-02-13 12:10:29.835830] cc - pid=18495 tid=3209 fid=5e01  DEBUG -- Legacy login request from demo@example.com
+```
+
+Run the `login_requests.rb` drain and set it up as:
+
+```
+kato log drain add -f json mytestdrain tcp://127.0.0.1:9123
+```
+
+In the ruby code, we match the records of "cloud_controller" log
+against a regexp to filter all login requests:
+
+```ruby
+  if event["Name"] == "cloud_controller"
+    if event["Text"] =~ /.*DEBUG -- Legacy login request from (.+)$/
+      puts "#{Time.now} => #{$1} just logged in"
+    end
+  end
+```
+
+When users login, the drain would output:
+
+```
+$ ruby login_requests.rb 
+Listening for login events...
+[...]
+2013-02-13 12:17:54 -0800 => s@s.com just logged in
+2013-02-13 12:17:56 -0800 => s@s.com just logged in
+```

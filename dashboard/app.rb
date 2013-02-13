@@ -1,7 +1,7 @@
 require "fnordmetric"
 require "./stackato.rb"
 
-FnordMetric.namespace :stackato do
+FnordMetric.namespace :Stackato do
 
   # render a timeseries graph
   widget 'Requests',
