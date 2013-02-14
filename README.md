@@ -131,3 +131,11 @@ Listening for login events...
 2013-02-13 12:17:54 -0800 => s@s.com just logged in
 2013-02-13 12:17:56 -0800 => s@s.com just logged in
 ```
+
+## Deploying drains to Stackato
+
+Stackato 2.8+ includes the Harbor port mapping service that allows one
+to deploy Logyard drains as an app. See
+[webdrain](https://github.com/ActiveState/webdrain) - a web
+application acting like the echo drain, but displaying the received
+messages on the browser via websocket.
