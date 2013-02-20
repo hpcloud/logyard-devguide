@@ -134,7 +134,7 @@ Listening for login events...
 
 ## Deploying drains to Stackato
 
-Stackato 2.8+ includes the Harbor port mapping service that allows one
+Stackato 2.8+ includes the [Harbor](https://api.stacka.to/docs/deploy/services/port-service.html) port mapping service that allows one
 to deploy Logyard drains as an app. See
 [webdrain](https://github.com/ActiveState/webdrain) - a web
 application acting like the echo drain, but displaying the received
